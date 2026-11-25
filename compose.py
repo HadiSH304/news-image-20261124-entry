@@ -6,6 +6,10 @@ with PIL (local build only; main.py is stdlib-only and only copies the
 committed image). Flat vector illustration only: no photos, no recognisable
 faces, no hands. Every word is renderer-typeset.
 
+v3 (slot 3, Wed 2026-11-25 19:56 WIB): re-rendered at JPEG quality 55
+(JPEG_QUALITY) — the only change vs v1/v2, whose image was q45. Content,
+layout, text and main.py are untouched.
+
 Typography (per ~/workspace/makefun/typography-study.md): Playfair Display
 Black/Bold for the date and lead headlines; Archivo Narrow 600/700 for
 cards, labels and ALL figure strips (tabular digits, x-height 0.526);
@@ -58,6 +62,8 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 FONTS = os.path.join(HERE, "fonts")
 
 W, H = 1024, 1024
+JPEG_QUALITY = 55  # v3 re-render: q55 (v1/v2 image was q45); higher quality,
+# still well under the 1,048,576-byte cap.
 CREAM = (247, 243, 232)
 PAPER = (250, 247, 238)
 NAVY = (14, 30, 58)
@@ -681,7 +687,7 @@ def check_pins(box):
     return worst
 
 
-def build(quality=55):
+def build(quality=JPEG_QUALITY):
     img = Image.new("RGB", (W, H), CREAM)
     d = ImageDraw.Draw(img)
 
@@ -855,5 +861,5 @@ def build(quality=55):
 
 
 if __name__ == "__main__":
-    q = int(sys.argv[1]) if len(sys.argv) > 1 else 55
+    q = int(sys.argv[1]) if len(sys.argv) > 1 else JPEG_QUALITY
     build(q)
